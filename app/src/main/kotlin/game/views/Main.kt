@@ -14,9 +14,13 @@ class MainView : View() {
             close()
         }
 
-        tableview(controller.resources().asObservable()) {
+        tableview(controller.resourceListProperty) {
             readonlyColumn("Type",   Resource::type)
             readonlyColumn("Amount", Resource::amount)
+
+            // subscribe<StateUpdated> {
+            //     items.setAll(it.state.resourceList)
+            // }
         }
     }
 }
