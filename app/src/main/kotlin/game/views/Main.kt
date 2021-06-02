@@ -1,26 +1,28 @@
 package game
 
+import javafx.beans.property.ReadOnlyDoubleWrapper
 import tornadofx.*
 
 class MainView : View() {
     val controller: MainController by inject()
-
-    override fun onDock() {
-        setWindowMinSize(300, 300)
-    }
 
     override val root = vbox {
         shortcut("Ctrl+Q") {
             close()
         }
 
-        tableview(controller.resourceListProperty) {
-            readonlyColumn("Type",   Resource::type)
-            readonlyColumn("Amount", Resource::amount)
+        tableview(controller.resourceListWithCapacitiesProperty) {
+            readonlyColumn("Type",   ResourceWithCapacity::type)
+            readonlyColumn("Amount", ResourceWithCapacity::amount)
 
-            // subscribe<StateUpdated> {
-            //     items.setAll(it.state.resourceList)
-            // }
+            column<ResourceWithCapacity, Number>("Filled") {
+                ReadOnlyDoubleWrapper(it.value.amount / it.value.capacity.toDouble())
+            }.useProgressBar()
+
+            readonlyColumn("Capacity", ResourceWithCapacity::capacity)
+
+            prefWidth  = 338.0
+            prefHeight = 7 * 26.3
         }
     }
 }

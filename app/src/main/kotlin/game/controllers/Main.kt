@@ -2,29 +2,26 @@ package game
 
 import kotlin.concurrent.timer
 import javafx.beans.property.SimpleObjectProperty
-import javafx.beans.property.SimpleListProperty
-import javafx.beans.value.ChangeListener
+import javafx.beans.property.ReadOnlyListWrapper
 import tornadofx.*
 
 class MainController: Controller() {
     val settlementProperty = SimpleObjectProperty(Settlement())
-    var settlement by settlementProperty
+    var settlement: Settlement by settlementProperty
 
-    val resourceListProperty = SimpleListProperty(settlement.resourceList.asObservable())
-    var resourceList by resourceListProperty
+    val resourceListWithCapacitiesProperty = ReadOnlyListWrapper<ResourceWithCapacity>()
 
     init {
-        settlementProperty.addListener(ChangeListener { _, _, new: Settlement ->
-            resourceList = new.resourceList.asObservable()
+        resourceListWithCapacitiesProperty.bind(settlementProperty.objectBinding {
+            settlementProperty.value.resourceListWithCapacities.asObservable()
         })
 
         timer(name = "ticker", daemon = true, period = 1000, initialDelay = 1000) {
             settlement = settlement
+                .addResource(ResourceType.FOOD,   100)
                 .addResource(ResourceType.TIMBER, 100)
                 .addResource(ResourceType.STONE,  100)
                 .addResource(ResourceType.IRON,   100)
-
-            // fire(StateUpdated(settlement))
         }
     }
 }
