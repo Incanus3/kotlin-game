@@ -3,8 +3,15 @@ package game
 import javafx.beans.property.ReadOnlyDoubleWrapper
 import tornadofx.*
 
-class MainView : View() {
-    val controller: MainController by inject()
+class MainView: View() {
+    override val root = tabpane {
+        tab<ResourcesView>()
+        tab<BuildingsView>()
+    }
+}
+
+class ResourcesView: View("Resources") {
+    val controller: ResourcesController by inject()
 
     override val root = vbox {
         shortcut("Ctrl+Q") {
@@ -25,4 +32,8 @@ class MainView : View() {
             prefHeight = 7 * 26.3
         }
     }
+}
+
+class BuildingsView: View("Buildings") {
+    override val root = stackpane { text("tady budou budovy") }
 }

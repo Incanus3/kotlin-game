@@ -8,10 +8,22 @@ enum class ResourceType {
     }
 }
 
+enum class BuildingType {
+    FARM, WOODCUTTER, QUARRY, MINE;
+
+    override fun toString(): String {
+        return name.lowercase().replaceFirstChar { it.uppercase() }
+    }
+}
+
 data class Resource(val type: ResourceType, val amount: Int)
 data class ResourceWithCapacity(val type: ResourceType, val amount: Int, val capacity: Int)
 
-class Settlement(resources: Map<ResourceType, Int>? = null, capacities: Map<ResourceType, Int>? = null) {
+class Settlement(
+    resources:  Map<ResourceType, Int>? = null,
+    capacities: Map<ResourceType, Int>? = null,
+    buildings:  Map<BuildingType, Int>? = null,
+) {
     val resources:  Map<ResourceType, Int> = resources ?: mapOf(
         ResourceType.FOOD   to 0,
         ResourceType.TIMBER to 0,
@@ -23,6 +35,12 @@ class Settlement(resources: Map<ResourceType, Int>? = null, capacities: Map<Reso
         ResourceType.TIMBER to 1000,
         ResourceType.STONE  to 1000,
         ResourceType.IRON   to 1000,
+    )
+    val buildings: Map<BuildingType, Int> = buildings ?: mapOf(
+        BuildingType.FARM       to 1,
+        BuildingType.WOODCUTTER to 1,
+        BuildingType.QUARRY     to 1,
+        BuildingType.MINE       to 1,
     )
 
     val resourceList: List<Resource>
@@ -45,5 +63,19 @@ class Settlement(resources: Map<ResourceType, Int>? = null, capacities: Map<Reso
         val capacity      = getResourceCapacity(type)
 
         return Settlement(resources + (type to minOf(currentAmount + amount, capacity)), capacities)
+    }
+}
+
+class Game(val settlements: List<Settlement> = listOf(Settlement())) {
+    val mainSettlement: Settlement
+        get() = settlements.first()
+
+    fun tick(): Game {
+        return Game(listOf(mainSettlement
+            .addResource(ResourceType.FOOD,   100)
+            .addResource(ResourceType.TIMBER, 100)
+            .addResource(ResourceType.STONE,  100)
+            .addResource(ResourceType.IRON,   100)
+        ))
     }
 }
