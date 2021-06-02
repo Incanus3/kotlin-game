@@ -6,15 +6,27 @@ import tornadofx.*
 class ResourcesController: Controller() {
     override val scope = super.scope as GameScope
 
-    val resourceListWithCapacitiesProperty = ReadOnlyListWrapper<ResourceWithCapacity>()
+    val resourcesWithCapacities = ReadOnlyListWrapper<ResourceWithCapacity>()
 
     init {
-        resourceListWithCapacitiesProperty.bind(scope.gameProperty.objectBinding {
+        resourcesWithCapacities.bind(scope.gameProperty.objectBinding {
             scope.gameProperty.value.mainSettlement.resourceListWithCapacities.asObservable()
         })
     }
 }
 
-class BuildingsController: Controller() {
+data class BuildingWithCount(val type: BuildingType, val count: Int)
 
+class BuildingsController: Controller() {
+    override val scope = super.scope as GameScope
+
+    val buildings = ReadOnlyListWrapper<BuildingWithCount>()
+
+    init {
+        buildings.bind(scope.gameProperty.objectBinding {
+            scope.gameProperty.value.mainSettlement.buildings
+                .map { BuildingWithCount(it.key, it.value) }
+                .asObservable()
+        })
+    }
 }

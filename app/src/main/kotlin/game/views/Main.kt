@@ -1,10 +1,17 @@
 package game
 
 import javafx.beans.property.ReadOnlyDoubleWrapper
+import javafx.scene.control.TabPane
 import tornadofx.*
 
 class MainView: View() {
     override val root = tabpane {
+        shortcut("Ctrl+Q") {
+            close()
+        }
+
+        tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
+
         tab<ResourcesView>()
         tab<BuildingsView>()
     }
@@ -14,11 +21,7 @@ class ResourcesView: View("Resources") {
     val controller: ResourcesController by inject()
 
     override val root = vbox {
-        shortcut("Ctrl+Q") {
-            close()
-        }
-
-        tableview(controller.resourceListWithCapacitiesProperty) {
+        tableview(controller.resourcesWithCapacities) {
             readonlyColumn("Type",   ResourceWithCapacity::type)
             readonlyColumn("Amount", ResourceWithCapacity::amount)
 
@@ -35,5 +38,15 @@ class ResourcesView: View("Resources") {
 }
 
 class BuildingsView: View("Buildings") {
-    override val root = stackpane { text("tady budou budovy") }
+    val controller: BuildingsController by inject()
+
+    override val root = vbox {
+        tableview(controller.buildings) {
+            readonlyColumn("Type",  BuildingWithCount::type)
+            readonlyColumn("Count", BuildingWithCount::count)
+
+            prefWidth  = 200.0
+            prefHeight = 7 * 24.0
+        }
+    }
 }
