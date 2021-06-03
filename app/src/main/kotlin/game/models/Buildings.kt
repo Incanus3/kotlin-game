@@ -12,35 +12,35 @@ abstract class Building {
     abstract val type: BuildingType
     abstract val cost: List<Resource>
 
-    open val produces: List<Resource> = emptyList()
-    open val consumes: List<Resource> = emptyList()
+    open val production:  List<Resource> = emptyList()
+    open val consumption: List<Resource> = emptyList()
 }
 
 class Farm: Building() {
-    override val type     = BuildingType.FARM
-    override val cost     = listOf(Resource(ResourceType.TIMBER, 100))
-    override val produces = listOf(Resource(ResourceType.FOOD,   10 ))
+    override val type       = BuildingType.FARM
+    override val cost       = listOf(Resource(ResourceType.TIMBER, 100))
+    override val production = listOf(Resource(ResourceType.FOOD,   10 ))
 }
 
 class Woodcutter: Building() {
-    override val type     = BuildingType.WOODCUTTER
-    override val cost     = listOf(Resource(ResourceType.STONE,  100))
-    override val produces = listOf(Resource(ResourceType.TIMBER, 10 ))
+    override val type       = BuildingType.WOODCUTTER
+    override val cost       = listOf(Resource(ResourceType.STONE,  100))
+    override val production = listOf(Resource(ResourceType.TIMBER, 10 ))
 }
 
 class Quarry: Building() {
-    override val type     = BuildingType.QUARRY
-    override val cost     = listOf(Resource(ResourceType.TIMBER, 100))
-    override val produces = listOf(Resource(ResourceType.STONE,  10 ))
+    override val type       = BuildingType.QUARRY
+    override val cost       = listOf(Resource(ResourceType.TIMBER, 100))
+    override val production = listOf(Resource(ResourceType.STONE,  10 ))
 }
 
 class Mine: Building() {
-    override val type     = BuildingType.MINE
-    override val cost     = listOf(
+    override val type = BuildingType.MINE
+    override val cost = listOf(
         Resource(ResourceType.TIMBER, 100),
         Resource(ResourceType.STONE,  100),
     )
-    override val produces = listOf(Resource(ResourceType.IRON, 10))
+    override val production = listOf(Resource(ResourceType.IRON, 10))
 }
 
 class Buildings {

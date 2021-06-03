@@ -34,7 +34,7 @@ class Settlement(
 
     fun getProduction(): Map<ResourceType, Int> {
         return buildings.flatMap { (type, count) ->
-            Buildings.forType(type).produces.map { Resource(it.type, it.amount * count ) }
+            Buildings.forType(type).production.map { Resource(it.type, it.amount * count ) }
         }
             .groupBy(Resource::type, Resource::amount)
             .mapValues { it.value.sum() }
