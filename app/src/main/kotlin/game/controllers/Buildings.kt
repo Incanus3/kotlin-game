@@ -1,19 +1,15 @@
 package game.controllers
 
+import game.GameScope
 import game.models.BuildingType
 import game.models.Buildings
 import game.models.Game
-import game.GameScope
 import javafx.beans.property.ReadOnlyBooleanWrapper
 import javafx.beans.property.ReadOnlyListWrapper
-import tornadofx.Controller
-import tornadofx.asObservable
-import tornadofx.booleanBinding
-import tornadofx.objectBinding
+import tornadofx.*
 
 class BuildingVM(val type: BuildingType, val count: Int, controller: BuildingsController) {
-    val building   = Buildings.forType(type)
-    val canBeBuilt = ReadOnlyBooleanWrapper()
+    val building = Buildings.forType(type)
 
     val itself: BuildingVM
         get() = this
@@ -24,8 +20,11 @@ class BuildingVM(val type: BuildingType, val count: Int, controller: BuildingsCo
     val consumptionString: String
         get() = building.consumption.map { "${it.amount} ${it.type}" }.joinToString()
 
+    val canBeBuiltProperty = ReadOnlyBooleanWrapper()
+    val canBeBuilt by canBeBuiltProperty
+
     init {
-        canBeBuilt.bind(controller.gameProperty.booleanBinding {
+        canBeBuiltProperty.bind(controller.gameProperty.booleanBinding {
             it!!.mainSettlement.canBuild(type)
         })
     }

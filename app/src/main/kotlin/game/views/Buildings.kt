@@ -18,7 +18,7 @@ class BuildingsView: View("Buildings") {
                 graphic = button("Build") {
                     action { controller.build(it.type) }
 
-                    enableWhen(it.canBeBuilt)
+                    enableWhen(it.canBeBuiltProperty)
 
                     useMaxWidth = true
                 }

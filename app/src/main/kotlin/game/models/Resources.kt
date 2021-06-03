@@ -9,4 +9,3 @@ enum class ResourceType {
 }
 
 data class Resource(val type: ResourceType, val amount: Int)
-data class ResourceWithCapacity(val type: ResourceType, val amount: Int, val capacity: Int)

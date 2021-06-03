@@ -13,13 +13,6 @@ class Settlement(
         BuildingType.MINE       to 1,
     )
 
-    val resourceList: List<Resource>
-        get() = resources.map { Resource(it.key, it.value) }
-    val resourceListWithCapacities: List<ResourceWithCapacity>
-        get() = resources.map {
-            ResourceWithCapacity(it.key, it.value, getResourceCapacity(it.key))
-        }
-
     fun getResourceAmount(type: ResourceType): Int {
         return resources.getOrDefault(type, 0)
     }

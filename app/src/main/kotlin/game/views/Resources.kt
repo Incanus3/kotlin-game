@@ -1,28 +1,22 @@
 package game.views
 
+import game.controllers.ResourceVM
 import game.controllers.ResourcesController
-import game.models.ResourceWithCapacity
-import javafx.beans.property.ReadOnlyDoubleWrapper
-import tornadofx.*
+import tornadofx.View
+import tornadofx.readonlyColumn
+import tornadofx.tableview
+import tornadofx.vbox
 
 class ResourcesView: View("Resources") {
     val controller: ResourcesController by inject()
 
     override val root = vbox {
         tableview(controller.resourcesWithCapacities) {
-            readonlyColumn("Type",   ResourceWithCapacity::type)
-
-            column<ResourceWithCapacity, Number>("Production") {
-                controller.productionOf(it.value.type)
-            }
-
-            readonlyColumn("Amount", ResourceWithCapacity::amount)
-
-            column<ResourceWithCapacity, Number>("Filled") {
-                ReadOnlyDoubleWrapper(it.value.amount / it.value.capacity.toDouble())
-            }.useProgressBar()
-
-            readonlyColumn("Capacity", ResourceWithCapacity::capacity)
+            readonlyColumn("Type",       ResourceVM::type)
+            readonlyColumn("Production", ResourceVM::production)
+            readonlyColumn("Amount",     ResourceVM::amount)
+            readonlyColumn("Filled",     ResourceVM::filled).useProgressBar()
+            readonlyColumn("Capacity",   ResourceVM::capacity)
 
             prefWidth      = 338.0
             prefHeight     = 7 * 26.3
