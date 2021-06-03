@@ -12,9 +12,13 @@ class GameScope(game: Game = Game()): Scope() {
     var game: Game by gameProperty
 
     init {
-        timer(name = "ticker", daemon = true, period = 1000, initialDelay = 1000) {
-            this@GameScope.game = this@GameScope.game.tick()
+        timer(name = "ticker", daemon = true, period = 5000, initialDelay = 5000) {
+            updateGame { it.tick() }
         }
+    }
+
+    fun updateGame(op: (Game) -> Game) {
+        game = op.invoke(game)
     }
 }
 
