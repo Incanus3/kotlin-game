@@ -9,6 +9,11 @@ class ResourcesView: View("Resources") {
     override val root = vbox {
         tableview(controller.resourcesWithCapacities) {
             readonlyColumn("Type",   ResourceWithCapacity::type)
+
+            column<ResourceWithCapacity, Number>("Production") {
+                controller.productionOf(it.value.type)
+            }
+
             readonlyColumn("Amount", ResourceWithCapacity::amount)
 
             column<ResourceWithCapacity, Number>("Filled") {

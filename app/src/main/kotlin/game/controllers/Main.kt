@@ -2,6 +2,7 @@ package game
 
 import javafx.beans.property.ReadOnlyListWrapper
 import javafx.beans.value.ObservableBooleanValue
+import javafx.beans.value.ObservableIntegerValue
 import tornadofx.*
 
 class ResourcesController: Controller() {
@@ -11,8 +12,14 @@ class ResourcesController: Controller() {
 
     init {
         resourcesWithCapacities.bind(scope.gameProperty.objectBinding {
-            scope.gameProperty.value.mainSettlement.resourceListWithCapacities.asObservable()
+            it!!.mainSettlement.resourceListWithCapacities.asObservable()
         })
+    }
+
+    fun productionOf(type: ResourceType): ObservableIntegerValue {
+        return scope.gameProperty.integerBinding {
+            it!!.mainSettlement.getProductionOf(type)
+        }
     }
 }
 
@@ -25,7 +32,7 @@ class BuildingsController: Controller() {
 
     init {
         buildings.bind(scope.gameProperty.objectBinding {
-            scope.gameProperty.value.mainSettlement.buildings
+            it!!.mainSettlement.buildings
                 .map { BuildingWithCount(it.key, it.value) }
                 .asObservable()
         })
@@ -39,7 +46,7 @@ class BuildingsController: Controller() {
 
     fun canBuild(type: BuildingType): ObservableBooleanValue {
         return scope.gameProperty.booleanBinding {
-            scope.gameProperty.value.mainSettlement.canBuild(type)
+            it!!.mainSettlement.canBuild(type)
         }
     }
 }

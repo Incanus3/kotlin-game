@@ -12,12 +12,14 @@ class GameScope(game: Game = Game()): Scope() {
     var game: Game by gameProperty
 
     init {
-        timer(name = "ticker", daemon = true, period = 5000, initialDelay = 5000) {
+        timer(name = "ticker", daemon = true, period = 1000, initialDelay = 1000) {
             updateGame { it.tick() }
         }
     }
 
     fun updateGame(op: (Game) -> Game) {
+        // TODO: protect this with mutex
+        // - this could be done with Mutex.withLock, the problem is that this is a suspend funcion
         game = op.invoke(game)
     }
 }

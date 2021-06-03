@@ -52,6 +52,6 @@ class Buildings {
             BuildingType.MINE       to Mine(),
         )
 
-        fun forType(type: BuildingType) = buildings[type]
+        fun forType(type: BuildingType) = buildings[type]!!
     }
 }

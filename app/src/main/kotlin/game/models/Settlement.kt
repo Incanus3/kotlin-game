@@ -32,6 +32,19 @@ class Settlement(
         return buildings.getOrDefault(type, 0)
     }
 
+    fun getProduction(): Map<ResourceType, Int> {
+        return buildings.flatMap { (type, count) ->
+            Buildings.forType(type).produces.map { Resource(it.type, it.amount * count ) }
+        }
+            .groupBy(Resource::type, Resource::amount)
+            .mapValues { it.value.sum() }
+    }
+
+    // FIXME: this is very ineffective
+    fun getProductionOf(type: ResourceType): Int {
+        return getProduction()[type]!!
+    }
+
     fun addResource(type: ResourceType, amount: Int): Settlement {
         val currentAmount = getResourceAmount(type)
         val capacity      = getResourceCapacity(type)
@@ -41,9 +54,14 @@ class Settlement(
         )
     }
 
+    fun produce(): Settlement {
+        return getProduction().asIterable().fold(this) { settlement, (resourceType, amount) ->
+            settlement.addResource(resourceType, amount)
+        }
+    }
+
     fun build(type: BuildingType): Settlement {
-        val building        = Buildings.forType(type)!!
-        val resourceUpdates = building.cost.associate { it.type to it.amount }
+        val resourceUpdates = Buildings.forType(type).cost.associate { it.type to it.amount }
 
         return Settlement(
             ResourceType.values().associateWith {
@@ -54,8 +72,6 @@ class Settlement(
     }
 
     fun canBuild(type: BuildingType): Boolean {
-        val building = Buildings.forType(type)!!
-
-        return building.cost.all { getResourceAmount(it.type) >= it.amount }
+        return Buildings.forType(type).cost.all { getResourceAmount(it.type) >= it.amount }
     }
 }
