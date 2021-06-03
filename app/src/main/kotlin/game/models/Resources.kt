@@ -1,4 +1,4 @@
-package game
+package game.models
 
 enum class ResourceType {
     FOOD, TIMBER, STONE, IRON;

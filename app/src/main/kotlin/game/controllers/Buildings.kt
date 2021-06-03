@@ -1,27 +1,15 @@
-package game
+package game.controllers
 
+import game.models.BuildingType
+import game.models.Buildings
+import game.models.Game
+import game.GameScope
 import javafx.beans.property.ReadOnlyBooleanWrapper
 import javafx.beans.property.ReadOnlyListWrapper
-import javafx.beans.value.ObservableIntegerValue
-import tornadofx.*
-
-class ResourcesController: Controller() {
-    override val scope = super.scope as GameScope
-
-    val resourcesWithCapacities = ReadOnlyListWrapper<ResourceWithCapacity>()
-
-    init {
-        resourcesWithCapacities.bind(scope.gameProperty.objectBinding {
-            it!!.mainSettlement.resourceListWithCapacities.asObservable()
-        })
-    }
-
-    fun productionOf(type: ResourceType): ObservableIntegerValue {
-        return scope.gameProperty.integerBinding {
-            it!!.mainSettlement.getProductionOf(type)
-        }
-    }
-}
+import tornadofx.Controller
+import tornadofx.asObservable
+import tornadofx.booleanBinding
+import tornadofx.objectBinding
 
 class BuildingVM(val type: BuildingType, val count: Int, controller: BuildingsController) {
     val building   = Buildings.forType(type)

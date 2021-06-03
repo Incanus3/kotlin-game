@@ -1,5 +1,7 @@
-package game
+package game.views
 
+import game.controllers.ResourcesController
+import game.models.ResourceWithCapacity
 import javafx.beans.property.ReadOnlyDoubleWrapper
 import tornadofx.*
 

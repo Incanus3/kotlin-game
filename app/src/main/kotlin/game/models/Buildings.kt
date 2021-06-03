@@ -1,4 +1,4 @@
-package game
+package game.models
 
 enum class BuildingType {
     FARM, WOODCUTTER, QUARRY, MINE;

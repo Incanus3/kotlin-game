@@ -1,5 +1,7 @@
-package game
+package game.views
 
+import game.controllers.BuildingVM
+import game.controllers.BuildingsController
 import tornadofx.*
 
 class BuildingsView: View("Buildings") {

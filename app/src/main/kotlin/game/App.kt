@@ -1,5 +1,7 @@
 package game
 
+import game.models.Game
+import game.views.MainView
 import javafx.beans.property.SimpleObjectProperty
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyCodeCombination

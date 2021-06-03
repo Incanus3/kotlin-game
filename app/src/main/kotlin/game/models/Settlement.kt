@@ -1,4 +1,4 @@
-package game
+package game.models
 
 class Settlement(
     resources: Map<ResourceType, Int>? = null,

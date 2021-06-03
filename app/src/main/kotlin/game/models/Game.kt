@@ -1,4 +1,4 @@
-package game
+package game.models
 
 class Game(val settlements: List<Settlement> = listOf(Settlement())) {
     val mainSettlement: Settlement
