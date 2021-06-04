@@ -30,7 +30,7 @@ class ResourcesController: Controller() {
             settlement.resources
                 .map {
                     ResourceVM(
-                        it.key, it.value, settlement.getResourceCapacity(it.key), this
+                        it.type, it.amount, settlement.capacities.forType(it.type), this
                     )
                 }
                 .asObservable()

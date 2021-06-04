@@ -14,11 +14,11 @@ class BuildingVM(val type: BuildingType, val count: Int, controller: BuildingsCo
     val itself: BuildingVM
         get() = this
     val costString: String
-        get() = building.cost.map { "${it.amount} ${it.type}" }.joinToString()
+        get() = building.cost.toString()
     val productionString: String
-        get() = building.production.map { "${it.amount} ${it.type}" }.joinToString()
+        get() = building.production.toString()
     val consumptionString: String
-        get() = building.consumption.map { "${it.amount} ${it.type}" }.joinToString()
+        get() = building.consumption.toString()
 
     val canBeBuiltProperty = ReadOnlyBooleanWrapper().apply {
         bind(controller.gameProperty.booleanBinding {
