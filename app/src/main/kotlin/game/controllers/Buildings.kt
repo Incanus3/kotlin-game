@@ -9,7 +9,7 @@ import javafx.beans.property.ReadOnlyListWrapper
 import tornadofx.*
 
 class BuildingVM(val type: BuildingType, val count: Int, controller: BuildingsController) {
-    val building = Buildings.forType(type)
+    private val building = Buildings.forType(type)
 
     val itself: BuildingVM
         get() = this
@@ -20,24 +20,20 @@ class BuildingVM(val type: BuildingType, val count: Int, controller: BuildingsCo
     val consumptionString: String
         get() = building.consumption.map { "${it.amount} ${it.type}" }.joinToString()
 
-    val canBeBuiltProperty = ReadOnlyBooleanWrapper()
-    val canBeBuilt by canBeBuiltProperty
-
-    init {
-        canBeBuiltProperty.bind(controller.gameProperty.booleanBinding {
+    val canBeBuiltProperty = ReadOnlyBooleanWrapper().apply {
+        bind(controller.gameProperty.booleanBinding {
             it!!.mainSettlement.canBuild(type)
         })
     }
+    val canBeBuilt by canBeBuiltProperty
 }
 
 class BuildingsController: Controller() {
     override val scope = super.scope as GameScope
 
     val gameProperty = scope.gameProperty
-    val buildings    = ReadOnlyListWrapper<BuildingVM>()
-
-    init {
-        buildings.bind(gameProperty.objectBinding {
+    val buildings    = ReadOnlyListWrapper<BuildingVM>().also {
+        it.bind(gameProperty.objectBinding {
             it!!.mainSettlement.buildings
                 .map { BuildingVM(it.key, it.value, this) }
                 .asObservable()

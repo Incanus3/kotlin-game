@@ -8,7 +8,7 @@ import tornadofx.tableview
 import tornadofx.vbox
 
 class ResourcesView: View("Resources") {
-    val controller: ResourcesController by inject()
+    private val controller: ResourcesController by inject()
 
     override val root = vbox {
         tableview(controller.resourcesWithCapacities) {

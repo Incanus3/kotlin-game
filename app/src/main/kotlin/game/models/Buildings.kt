@@ -45,7 +45,7 @@ class Mine: Building() {
 
 class Buildings {
     companion object {
-        val buildings = mapOf(
+        private val buildings = mapOf(
             BuildingType.FARM       to Farm(),
             BuildingType.WOODCUTTER to Woodcutter(),
             BuildingType.QUARRY     to Quarry(),

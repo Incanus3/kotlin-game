@@ -5,7 +5,7 @@ import game.controllers.BuildingsController
 import tornadofx.*
 
 class BuildingsView: View("Buildings") {
-    val controller: BuildingsController by inject()
+    private val controller: BuildingsController by inject()
 
     override val root = vbox {
         tableview(controller.buildings) {

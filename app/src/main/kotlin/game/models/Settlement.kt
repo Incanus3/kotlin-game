@@ -4,8 +4,8 @@ class Settlement(
     resources: Map<ResourceType, Int>? = null,
     buildings: Map<BuildingType, Int>? = null,
 ) {
-    val capacities = ResourceType.values().associateWith { 1000 }
-    val resources  = resources ?: ResourceType.values().associateWith { 0 }
+    val capacities =              ResourceType.values().associateWith { 1000 }
+    val resources  = resources ?: ResourceType.values().associateWith { 0    }
     val buildings  = buildings ?: mapOf(
         BuildingType.FARM       to 1,
         BuildingType.WOODCUTTER to 1,

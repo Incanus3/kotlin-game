@@ -11,24 +11,20 @@ class ResourceVM(
 ) {
     val filled = amount / capacity.toFloat()
 
-    val productionProperty = ReadOnlyIntegerWrapper()
-    val production by productionProperty
-
-    init {
-        productionProperty.bind(controller.gameProperty.integerBinding {
+    val productionProperty = ReadOnlyIntegerWrapper().apply {
+        bind(controller.gameProperty.integerBinding {
             it!!.mainSettlement.getProductionOf(type)
         })
     }
+    val production by productionProperty
 }
 
 class ResourcesController: Controller() {
     override val scope = super.scope as GameScope
 
     val gameProperty            = scope.gameProperty
-    val resourcesWithCapacities = ReadOnlyListWrapper<ResourceVM>()
-
-    init {
-        resourcesWithCapacities.bind(gameProperty.objectBinding {
+    val resourcesWithCapacities = ReadOnlyListWrapper<ResourceVM>().also {
+        it.bind(gameProperty.objectBinding {
             val settlement = it!!.mainSettlement
 
             settlement.resources

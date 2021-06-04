@@ -1,6 +1,6 @@
 package game.models
 
-class Game(val settlements: List<Settlement> = listOf(Settlement())) {
+class Game(private val settlements: List<Settlement> = listOf(Settlement())) {
     val mainSettlement: Settlement
         get() = settlements.first()
 
