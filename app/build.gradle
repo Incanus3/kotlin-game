@@ -43,7 +43,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'game.MyApp'
+    mainClass = 'game.GameApp'
 
     applicationDefaultJvmArgs = ['--add-opens=javafx.graphics/javafx.scene=ALL-UNNAMED']
     // applicationDefaultJvmArgs = ['--add-opens=ALL-UNNAMED']

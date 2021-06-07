@@ -1,6 +1,9 @@
 package game
 
+import game.models.BuildingType
 import game.models.Game
+import game.models.Resources
+import game.models.Settlement
 import game.views.MainView
 import javafx.beans.property.SimpleObjectProperty
 import javafx.scene.input.KeyCode
@@ -26,9 +29,19 @@ class GameScope(game: Game = Game()): Scope() {
     }
 }
 
-public class MyApp: App(MainView::class) {
+public class GameApp: App(MainView::class) {
     init {
-        scope = GameScope()
+        val settlement = Settlement(
+            capacities = Resources { all = 1000; food = 500 },
+            buildings  = mapOf(
+                BuildingType.FARM       to 1,
+                BuildingType.WOODCUTTER to 1,
+                BuildingType.QUARRY     to 1,
+                BuildingType.MINE       to 1,
+            )
+        )
+
+        scope = GameScope(Game(listOf(settlement)))
 
         FX.layoutDebuggerShortcut = KeyCodeCombination(KeyCode.J, KeyCombination.ALT_DOWN)
     }

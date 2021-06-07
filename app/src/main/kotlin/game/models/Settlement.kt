@@ -1,16 +1,11 @@
 package game.models
 
 class Settlement(
-    val resources: Resources = Resources(),
-    buildings: Map<BuildingType, Int>? = null,
+    val resources:  Resources = Resources(),
+    val capacities: Resources = Resources { all = 1000 },
+    buildings: Map<BuildingType, Int> = emptyMap(),
 ) {
-    val capacities = Resources { all = 1000; food = 500 }
-    val buildings  = buildings ?: mapOf(
-        BuildingType.FARM       to 1,
-        BuildingType.WOODCUTTER to 1,
-        BuildingType.QUARRY     to 1,
-        BuildingType.MINE       to 1,
-    )
+    val buildings = BuildingType.values().associateWith { 0 } + buildings
 
     private fun getBuiltCount(type: BuildingType): Int {
         return buildings.getOrDefault(type, 0)
@@ -28,12 +23,12 @@ class Settlement(
     }
 
     fun produce(): Settlement {
-        return Settlement((resources + getProduction()).cap(capacities), buildings)
+        return Settlement((resources + getProduction()).cap(capacities), capacities, buildings)
     }
 
     fun build(type: BuildingType): Settlement {
         return Settlement(
-            resources - Buildings.forType(type).cost,
+            resources - Buildings.forType(type).cost, capacities,
             buildings + mapOf(type to getBuiltCount(type) + 1)
         )
     }

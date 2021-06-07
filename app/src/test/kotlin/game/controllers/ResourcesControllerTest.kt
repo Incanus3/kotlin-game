@@ -14,7 +14,7 @@ class ResourcesControllerTest : DescribeSpec({
     val timberCapacity   = game.mainSettlement.capacities.forType(ResourceType.TIMBER)
     val timberProduction = woodcutterCount * woodcutter.production.forType(ResourceType.TIMBER)
 
-    describe("resourcesWithCapacities") {
+    describe("resourcesWithCapacities property") {
         it("should correctly represent current state of resources") {
             val scope      = GameScope(game)
             val controller = tornadofx.find(ResourcesController::class, scope)

@@ -28,8 +28,9 @@ class SettlementTest: DescribeSpec({
 
     describe("build()") {
         it("should work") {
-            settlement.build(BuildingType.QUARRY).buildings
-                .shouldBe(mapOf(BuildingType.WOODCUTTER to 3, BuildingType.QUARRY to 2))
+            val afterwards = settlement.build(BuildingType.QUARRY)
+
+            afterwards.buildings[BuildingType.QUARRY]!!.shouldBe(2)
         }
     }
 
