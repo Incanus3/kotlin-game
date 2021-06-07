@@ -63,6 +63,11 @@ class Resources {
         return Resources(resources + (type to minOf(forType(type) + amount, upTo)))
     }
 
+    override fun equals(other: Any?): Boolean {
+        return other is Resources && resources == other.resources
+    }
+    // TODO: implement hashCode()
+
     operator fun plus(other: Resources): Resources {
         return Resources(ResourceType.values().associateWith {
             forType(it) + other.forType(it)

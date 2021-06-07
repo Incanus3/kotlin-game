@@ -34,9 +34,11 @@ dependencies {
 
     // Use the Kotlin test library.
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    testImplementation 'io.kotest:kotest-runner-junit5:4.6.0'
+    testImplementation 'io.kotest:kotest-assertions-core:4.6.0'
 
     // Use the Kotlin JUnit integration.
-    testImplementation 'org.jetbrains.kotlin:kotlin-test-junit'
+    // testImplementation 'org.jetbrains.kotlin:kotlin-test-junit'
 }
 
 application {
@@ -58,4 +60,8 @@ compileKotlin {
 
 compileTestKotlin {
     kotlinOptions.jvmTarget = '11'
+}
+
+test {
+    useJUnitPlatform()
 }
