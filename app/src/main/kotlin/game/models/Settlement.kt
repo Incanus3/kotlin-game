@@ -7,17 +7,16 @@ class Settlement(
 ) {
     val buildings = BuildingType.values().associateWith { 0 } + buildings
 
-    private fun getBuiltCount(type: BuildingType): Int {
+    private fun getBuildingLevel(type: BuildingType): Int {
         return buildings.getOrDefault(type, 0)
     }
 
     private fun getProduction(): Resources {
         return buildings.map {
-            Buildings.forType(it.key).production * it.value
+            Buildings.forType(it.key).productionFor(it.value)
         }.reduce(Resources::plus)
     }
 
-    // FIXME: this is very ineffective
     fun getProductionOf(type: ResourceType): Int {
         return getProduction().forType(type)
     }
@@ -27,13 +26,17 @@ class Settlement(
     }
 
     fun build(type: BuildingType): Settlement {
+        val level = getBuildingLevel(type) + 1
+
         return Settlement(
-            resources - Buildings.forType(type).cost, capacities,
-            buildings + mapOf(type to getBuiltCount(type) + 1)
+            resources - Buildings.forType(type).costFor(level), capacities,
+            buildings + mapOf(type to level)
         )
     }
 
     fun canBuild(type: BuildingType): Boolean {
-        return resources.cover(Buildings.forType(type).cost)
+        val level = getBuildingLevel(type) + 1
+
+        return resources.cover(Buildings.forType(type).costFor(level))
     }
 }

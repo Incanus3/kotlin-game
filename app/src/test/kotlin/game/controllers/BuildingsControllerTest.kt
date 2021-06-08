@@ -20,13 +20,13 @@ class BuildingsControllerTest : DescribeSpec({
         it("allows user to build a building") {
             val farmBefore = controller.buildings.value.find { it.type == BuildingType.FARM }!!
 
-            farmBefore.count.shouldBe(0)
+            farmBefore.level.shouldBe(0)
 
             controller.build(BuildingType.FARM)
 
             val farmAfter = controller.buildings.value.find { it.type == BuildingType.FARM }!!
 
-            farmAfter.count.shouldBe(1)
+            farmAfter.level.shouldBe(1)
         }
 
         it("correctly shows whether a building can be built") {

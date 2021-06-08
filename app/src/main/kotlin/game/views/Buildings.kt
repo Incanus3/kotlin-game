@@ -9,12 +9,14 @@ class BuildingsView: View("Buildings") {
 
     override val root = vbox {
         tableview(controller.buildings) {
-            readonlyColumn("Type",     BuildingVM::type)
-            readonlyColumn("Count",    BuildingVM::count)
-            readonlyColumn("Cost",     BuildingVM::costString)
-            readonlyColumn("Produces", BuildingVM::productionString)
-            readonlyColumn("Consumes", BuildingVM::consumptionString)
-            readonlyColumn("Build",    BuildingVM::itself).cellFormat {
+            readonlyColumn("Type",         BuildingVM::type)
+            readonlyColumn("Level",        BuildingVM::level)
+            readonlyColumn("Produces",     BuildingVM::currentProduction)
+            readonlyColumn("Consumes",     BuildingVM::currentConsumption)
+            readonlyColumn("Will produce", BuildingVM::nextLvlProduction)
+            readonlyColumn("Will consume", BuildingVM::nextLvlConsumption)
+            readonlyColumn("Cost",         BuildingVM::nextLvlCost)
+            readonlyColumn("Build",        BuildingVM::itself).cellFormat {
                 graphic = button("Build") {
                     action { controller.build(it.type) }
 
@@ -24,7 +26,7 @@ class BuildingsView: View("Buildings") {
                 }
             }
 
-            prefWidth      = 570.0
+            prefWidth      = 770.0
             prefHeight     = 7 * 24.0
             selectionModel = null
         }

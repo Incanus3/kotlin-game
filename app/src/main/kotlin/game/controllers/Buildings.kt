@@ -8,17 +8,21 @@ import javafx.beans.property.ReadOnlyBooleanWrapper
 import javafx.beans.property.ReadOnlyListWrapper
 import tornadofx.*
 
-class BuildingVM(val type: BuildingType, val count: Int, controller: BuildingsController) {
+class BuildingVM(val type: BuildingType, val level: Int, controller: BuildingsController) {
     private val building = Buildings.forType(type)
 
     val itself: BuildingVM
         get() = this
-    val costString: String
-        get() = building.cost.toString()
-    val productionString: String
-        get() = building.production.toString()
-    val consumptionString: String
-        get() = building.consumption.toString()
+    val currentProduction: String
+        get() = building.productionFor(level).toString()
+    val currentConsumption: String
+        get() = building.consumptionFor(level).toString()
+    val nextLvlProduction: String
+        get() = building.productionFor(level + 1).toString()
+    val nextLvlConsumption: String
+        get() = building.consumptionFor(level + 1).toString()
+    val nextLvlCost: String
+        get() = building.costFor(level + 1).toString()
 
     val canBeBuiltProperty = ReadOnlyBooleanWrapper().apply {
         bind(controller.gameProperty.booleanBinding {

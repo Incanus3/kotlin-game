@@ -6,14 +6,22 @@ import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 
 class SettlementTest: DescribeSpec({
-    val settlement = Settlement(
-        buildings = mapOf(BuildingType.WOODCUTTER to 3, BuildingType.QUARRY to 1)
+    val woodcutterLevel = 3
+    val quarryLevel     = 1
+    val woodcutter      = Buildings.forType(BuildingType.WOODCUTTER)
+    val quarry          = Buildings.forType(BuildingType.QUARRY)
+    val timberProduction = woodcutter.productionFor(woodcutterLevel).forType(ResourceType.TIMBER)
+    val stoneProduction = quarry.productionFor(quarryLevel).forType(ResourceType.STONE)
+    val settlement      = Settlement(
+        buildings = mapOf(
+            BuildingType.WOODCUTTER to woodcutterLevel, BuildingType.QUARRY to quarryLevel
+        )
     )
 
     describe("getProductionOf()") {
         it("should work") {
-            settlement.getProductionOf(ResourceType.TIMBER).shouldBe(30)
-            settlement.getProductionOf(ResourceType.STONE ).shouldBe(10)
+            settlement.getProductionOf(ResourceType.TIMBER).shouldBe(timberProduction)
+            settlement.getProductionOf(ResourceType.STONE ).shouldBe(stoneProduction)
             settlement.getProductionOf(ResourceType.IRON  ).shouldBe(0 )
         }
     }
@@ -22,7 +30,9 @@ class SettlementTest: DescribeSpec({
         it("should work") {
             val afterwards = settlement.produce().produce().produce()
 
-            afterwards.resources.shouldBe(Resources { food = 0; timber = 90; stone = 30 })
+            afterwards.resources.shouldBe(Resources {
+                food = 0; timber = 3 * timberProduction; stone = 3 * stoneProduction
+            })
         }
     }
 

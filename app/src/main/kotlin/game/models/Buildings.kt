@@ -1,5 +1,7 @@
 package game.models
 
+import kotlin.math.pow
+
 enum class BuildingType {
     FARM, WOODCUTTER, QUARRY, MINE;
 
@@ -9,35 +11,47 @@ enum class BuildingType {
 }
 
 abstract class Building {
-    abstract val type: BuildingType
-    abstract val cost: Resources
+    abstract val type:     BuildingType
+    abstract val baseCost: Resources
 
-    open val production:  Resources = Resources()
-    open val consumption: Resources = Resources()
+    open val baseProduction:  Resources = Resources()
+    open val baseConsumption: Resources = Resources()
+
+    fun costFor(level: Int): Resources {
+        return baseCost * level
+    }
+
+    fun productionFor(level: Int): Resources {
+        return baseProduction * 2.toFloat().pow(level - 1).toInt()
+    }
+
+    fun consumptionFor(level: Int): Resources {
+        return baseConsumption * 2.toFloat().pow(level - 1).toInt()
+    }
 }
 
 class Farm: Building() {
-    override val type       = BuildingType.FARM
-    override val cost       = Resources { timber = 100 }
-    override val production = Resources { food   = 10  }
+    override val type           = BuildingType.FARM
+    override val baseCost       = Resources { timber = 100 }
+    override val baseProduction = Resources { food   = 10  }
 }
 
 class Woodcutter: Building() {
-    override val type       = BuildingType.WOODCUTTER
-    override val cost       = Resources { stone  = 100 }
-    override val production = Resources { timber = 10  }
+    override val type           = BuildingType.WOODCUTTER
+    override val baseCost       = Resources { stone  = 100 }
+    override val baseProduction = Resources { timber = 10  }
 }
 
 class Quarry: Building() {
-    override val type       = BuildingType.QUARRY
-    override val cost       = Resources { timber = 100 }
-    override val production = Resources { stone  = 10  }
+    override val type           = BuildingType.QUARRY
+    override val baseCost       = Resources { timber = 100 }
+    override val baseProduction = Resources { stone  = 10  }
 }
 
 class Mine: Building() {
-    override val type       = BuildingType.MINE
-    override val cost       = Resources { timber = 100; stone = 100 }
-    override val production = Resources { iron   = 10               }
+    override val type           = BuildingType.MINE
+    override val baseCost       = Resources { timber = 100; stone = 100 }
+    override val baseProduction = Resources { iron   = 10               }
 }
 
 class Buildings {

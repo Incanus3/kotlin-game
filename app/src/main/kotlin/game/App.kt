@@ -32,13 +32,8 @@ class GameScope(game: Game = Game()): Scope() {
 public class GameApp: App(MainView::class) {
     init {
         val settlement = Settlement(
+            resources  = Resources { all = 500              },
             capacities = Resources { all = 1000; food = 500 },
-            buildings  = mapOf(
-                BuildingType.FARM       to 1,
-                BuildingType.WOODCUTTER to 1,
-                BuildingType.QUARRY     to 1,
-                BuildingType.MINE       to 1,
-            )
         )
 
         scope = GameScope(Game(listOf(settlement)))
