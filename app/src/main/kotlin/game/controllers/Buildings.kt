@@ -3,7 +3,6 @@ package game.controllers
 import game.GameScope
 import game.models.BuildingType
 import game.models.Buildings
-import game.models.Game
 import javafx.beans.property.ReadOnlyBooleanWrapper
 import javafx.beans.property.ReadOnlyListWrapper
 import tornadofx.*
@@ -45,8 +44,8 @@ class BuildingsController: Controller() {
     }
 
     fun build(type: BuildingType) {
-        scope.updateGame { game ->
-            Game(listOf(game.mainSettlement.build(type)))
+        scope.updateGame {
+            it.withSettlements(listOf(it.mainSettlement.build(type)))
         }
     }
 }

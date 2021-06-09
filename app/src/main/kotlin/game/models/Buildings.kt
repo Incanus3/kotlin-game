@@ -17,17 +17,9 @@ abstract class Building {
     open val baseProduction:  Resources = Resources()
     open val baseConsumption: Resources = Resources()
 
-    fun costFor(level: Int): Resources {
-        return baseCost * level
-    }
-
-    fun productionFor(level: Int): Resources {
-        return baseProduction * 2.toFloat().pow(level - 1).toInt()
-    }
-
-    fun consumptionFor(level: Int): Resources {
-        return baseConsumption * 2.toFloat().pow(level - 1).toInt()
-    }
+    fun costFor(       level: Int) = baseCost        * 3.toFloat().pow(level - 1).toInt()
+    fun productionFor( level: Int) = baseProduction  * 2.toFloat().pow(level - 1).toInt()
+    fun consumptionFor(level: Int) = baseConsumption * 2.toFloat().pow(level - 1).toInt()
 }
 
 class Farm: Building() {

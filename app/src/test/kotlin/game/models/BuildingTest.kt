@@ -8,7 +8,7 @@ class BuildingTest : DescribeSpec({
 
     describe("costFor(level)") {
         it("should work") {
-            building.costFor(3).shouldBe(building.baseCost * 3)
+            building.costFor(3).shouldBe(building.baseCost * 3 * 3)
         }
     }
 

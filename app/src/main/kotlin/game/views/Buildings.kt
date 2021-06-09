@@ -2,7 +2,10 @@ package game.views
 
 import game.controllers.BuildingVM
 import game.controllers.BuildingsController
+import javafx.geometry.Pos
 import tornadofx.*
+import tornadofx.Stylesheet.Companion.tableCell
+import tornadofx.Stylesheet.Companion.tableView
 
 class BuildingsView: View("Buildings") {
     private val controller: BuildingsController by inject()
@@ -26,9 +29,18 @@ class BuildingsView: View("Buildings") {
                 }
             }
 
-            prefWidth      = 770.0
-            prefHeight     = 7 * 24.0
             selectionModel = null
+
+            stylesheet {
+                tableView {
+                    prefWidth  = 765.px
+                    prefHeight = 24.px + 4 * 35.px
+                }
+
+                tableCell {
+                    alignment = Pos.CENTER_LEFT
+                }
+            }
         }
     }
 }
