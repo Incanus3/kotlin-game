@@ -25,11 +25,13 @@ class BuildingsView: View("Buildings") {
 
                     enableWhen(it.canBeBuiltProperty)
 
-                    useMaxWidth = true
+                    useMaxWidth        = true
+                    isFocusTraversable = false
                 }
             }
 
-            selectionModel = null
+            selectionModel     = null
+            isFocusTraversable = false
 
             stylesheet {
                 tableView {

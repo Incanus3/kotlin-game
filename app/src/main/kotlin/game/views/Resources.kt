@@ -18,9 +18,11 @@ class ResourcesView: View("Resources") {
             readonlyColumn("Filled",     ResourceVM::filled).useProgressBar()
             readonlyColumn("Capacity",   ResourceVM::capacity)
 
-            prefWidth      = 338.0
-            prefHeight     = 7 * 26.3
-            selectionModel = null
+            prefWidth  = 338.0
+            prefHeight = 7 * 26.3
+
+            selectionModel     = null
+            isFocusTraversable = false
         }
     }
 }

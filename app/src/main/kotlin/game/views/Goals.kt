@@ -31,9 +31,10 @@ class GoalsView : View("My View") {
                 graphic = readonlyCheckbox(it.text, ReadOnlyBooleanWrapper(it.hasBeenMet))
             }
 
-            prefHeight = 5 * 25.0
-        }
+            prefHeight = 5 * 26.0
 
-        padding = Insets(0.0, 10.0, 10.0, 10.0)
+            isMouseTransparent = true
+            isFocusTraversable = false
+        }
     }
 }
