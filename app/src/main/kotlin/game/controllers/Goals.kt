@@ -12,7 +12,11 @@ class GoalsController: Controller() {
 
     val goals = ReadOnlyListWrapper<Goal>().also {
         it.bind(scope.gameProperty.objectBinding {
-            it!!.goals.asObservable()
+            val grouped = it!!.goals.groupBy(Goal::hasBeenMet)
+            val met     = grouped.getOrDefault(true,  emptyList()).takeLast(3)
+            val unmet   = grouped.getOrDefault(false, emptyList()).take(2)
+
+            (met + unmet).asObservable()
         })
     }
 }

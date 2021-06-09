@@ -32,6 +32,8 @@ dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.0-jre'
 
+    implementation "com.tylerthrailkill.helpers:pretty-print:v2.0.8"
+
     implementation group: 'no.tornado', name: 'tornadofx', version: '1.7.20'
 
     // Use the Kotlin test library.

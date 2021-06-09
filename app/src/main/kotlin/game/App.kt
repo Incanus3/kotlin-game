@@ -44,9 +44,17 @@ public class GameApp: App(MainView::class) {
 
         scope = GameScope(Game(
             listOf(settlement),
-            listOf(Goal("have 1000 timber") { game ->
-                game.resources.forType(ResourceType.TIMBER) >= 1000
-            })
+            listOf(
+                Goal("met 1") { true },
+                Goal("met 2") { true },
+                Goal("met 3") { true },
+                Goal("have 1000 timber") { game ->
+                    game.resources.forType(ResourceType.TIMBER) >= 1000
+                },
+                Goal("unmet 1") { false },
+                Goal("unmet 2") { false },
+                Goal("unmet 3") { false },
+            )
         ))
 
         FX.layoutDebuggerShortcut = KeyCodeCombination(KeyCode.J, KeyCombination.ALT_DOWN)
